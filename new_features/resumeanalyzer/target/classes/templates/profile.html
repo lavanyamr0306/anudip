@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | Resume Analyzer Pro</title>
+    <style>
+        :root {
+            --bg: #eceff1;
+            --panel: #f7f8fa;
+            --ink: #143035;
+            --muted: #4d666d;
+            --line: #d7dde2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 24px));
+            margin: 14px auto 30px;
+        }
+
+        .top {
+            background: linear-gradient(115deg, #0c766f, #1f4fb7);
+            border-radius: 20px;
+            color: #f4fbff;
+            padding: 18px;
+            box-shadow: 0 10px 26px rgba(11, 64, 89, 0.2);
+        }
+
+        .top-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 38px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .welcome {
+            margin: 6px 0 0;
+            color: #dcecf6;
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            background: rgba(245, 250, 255, 0.22);
+            color: #fff;
+            padding: 9px 14px;
+            font-weight: 700;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .layout {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #204148;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 12px;
+            margin-bottom: 5px;
+            color: #2a4950;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid #ccd6dc;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 13px;
+            background: #fff;
+        }
+
+        input[readonly] {
+            background: #eef3f7;
+            color: #607278;
+        }
+
+        .primary {
+            margin-top: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(120deg, #0f8679, #1d4dc8);
+            color: #fff;
+            padding: 10px 14px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .alert {
+            margin-top: 10px;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+
+        .alert.error {
+            background: #fce7e8;
+            color: #9f1d24;
+            border: 1px solid #f8c7cb;
+        }
+
+        .alert.success {
+            background: #e8fbf4;
+            color: #0f7a5f;
+            border: 1px solid #c9f0e1;
+        }
+
+        .meta-card {
+            background: linear-gradient(130deg, #0d7f73, #0f655e);
+            color: #f3fffb;
+        }
+
+        .meta-card h2 {
+            color: #f3fffb;
+        }
+
+        .profile-list {
+            margin-top: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .profile-item {
+            background: #fff;
+            border: 1px solid #dce4ea;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .profile-item span {
+            display: block;
+            font-size: 11px;
+            color: #607278;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .profile-item strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 15px;
+            color: #143035;
+            word-break: break-word;
+        }
+
+        @media (max-width: 860px) {
+            .layout,
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <section class="top">
+        <div class="top-head">
+            <div>
+                <h1>User Profile</h1>
+                <p class="welcome">Save your complete academic and professional details once, then reuse your profile resume for analysis.</p>
+            </div>
+            <div class="top-actions">
+                <a class="btn" th:href="@{/dashboard}">Dashboard</a>
+                <a class="btn" th:href="@{/profile/view}">View Profile</a>
+                <a class="btn" th:href="@{/reset-password}">Reset Password</a>
+                <a class="btn" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="layout">
+        <article class="panel">
+            <h2>Edit Profile</h2>
+            <p class="sub">Your email is linked to registration and cannot be changed here.</p>
+
+            <div class="alert error" th:if="${error}" th:text="${error}"></div>
+            <div class="alert success" th:if="${success}" th:text="${success}"></div>
+
+            <form th:action="@{/profile}" method="post" enctype="multipart/form-data">
+                <div class="grid">
+                    <div>
+                        <label for="name">Name</label>
+                        <input id="name" type="text" name="name" th:value="${profile.name}" required>
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <input id="email" type="email" name="email" th:value="${profile.email}" readonly>
+                    </div>
+                    <div>
+                        <label for="professionalTitle">Professional Title</label>
+                        <input id="professionalTitle" type="text" name="professionalTitle" placeholder="Software Engineer" th:value="${profile.professionalTitle}">
+                    </div>
+                    <div>
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input id="mobileNumber" type="text" name="mobileNumber" th:value="${profile.mobileNumber}">
+                    </div>
+                    <div>
+                        <label for="collegeName">College Name</label>
+                        <input id="collegeName" type="text" name="collegeName" th:value="${profile.collegeName}">
+                    </div>
+                    <div>
+                        <label for="degree">Degree</label>
+                        <input id="degree" type="text" name="degree" th:value="${profile.degree}">
+                    </div>
+                    <div>
+                        <label for="department">Department / Specialization</label>
+                        <input id="department" type="text" name="department" th:value="${profile.department}">
+                    </div>
+                    <div>
+                        <label for="cgpa">CGPA</label>
+                        <input id="cgpa" type="text" name="cgpa" th:value="${profile.cgpa}">
+                    </div>
+                    <div>
+                        <label for="linkedinProfile">LinkedIn Profile</label>
+                        <input id="linkedinProfile" type="text" name="linkedinProfile" th:value="${profile.linkedinProfile}">
+                    </div>
+                    <div>
+                        <label for="githubProfile">GitHub / GitLab</label>
+                        <input id="githubProfile" type="text" name="githubProfile" th:value="${profile.githubProfile}">
+                    </div>
+                    <div class="full">
+                        <label for="portfolioWebsite">Portfolio Website</label>
+                        <input id="portfolioWebsite" type="text" name="portfolioWebsite" th:value="${profile.portfolioWebsite}">
+                    </div>
+                    <div class="full">
+                        <label for="resumeFile">Resume Upload (PDF/DOC)</label>
+                        <input id="resumeFile" type="file" name="resumeFile" accept=".pdf,.doc,.docx">
+                    </div>
+                </div>
+
+                <button class="primary" type="submit">Save Profile</button>
+            </form>
+        </article>
+
+        <aside class="panel meta-card">
+            <h2>Current Profile</h2>
+            <p class="sub" style="color:#d2f3ea;">This summary is the same data that appears on your dashboard and dedicated profile page.</p>
+
+            <div class="profile-list">
+                <div class="profile-item">
+                    <span>Resume</span>
+                    <strong th:text="${profile.resumeFileName != null ? profile.resumeFileName : 'No resume uploaded yet'}">Resume Status</strong>
+                </div>
+                <div class="profile-item">
+                    <span>Professional Title</span>
+                    <strong th:text="${profile.professionalTitle != null ? profile.professionalTitle : 'Not provided'}">Title</strong>
+                </div>
+                <div class="profile-item">
+                    <span>College</span>
+                    <strong th:text="${profile.collegeName != null ? profile.collegeName : 'Not provided'}">College</strong>
+                </div>
+                <div class="profile-item">
+                    <span>Degree / Department</span>
+                    <strong th:text="${(profile.degree != null ? profile.degree : 'Not provided') + ' / ' + (profile.department != null ? profile.department : 'Not provided')}">Degree</strong>
+                </div>
+                <div class="profile-item">
+                    <span>Links</span>
+                    <strong th:text="${profile.linkedinProfile != null || profile.githubProfile != null || profile.portfolioWebsite != null ? 'Professional links added' : 'No links added yet'}">Links</strong>
+                </div>
+            </div>
+        </aside>
+    </section>
+</div>
+</body>
+</html>

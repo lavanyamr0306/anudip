@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile | Resume Analyzer Pro</title>
+    <style>
+        :root {
+            --bg: #eceff1;
+            --panel: #f7f8fa;
+            --ink: #143035;
+            --muted: #4d666d;
+            --line: #d7dde2;
+            --chip: #e8f2f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 24px));
+            margin: 14px auto 30px;
+        }
+
+        .top {
+            background: linear-gradient(115deg, #0c766f, #1f4fb7);
+            border-radius: 20px;
+            color: #f4fbff;
+            padding: 18px;
+            box-shadow: 0 10px 26px rgba(11, 64, 89, 0.2);
+        }
+
+        .top-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 38px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .welcome {
+            margin: 6px 0 0;
+            color: #dcecf6;
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            background: rgba(245, 250, 255, 0.22);
+            color: #fff;
+            padding: 9px 14px;
+            font-weight: 700;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .panel {
+            margin-top: 12px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #204148;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .item {
+            background: #fff;
+            border: 1px solid #dce4ea;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .item span {
+            display: block;
+            font-size: 11px;
+            color: #607278;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .item strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 16px;
+            color: #143035;
+            word-break: break-word;
+        }
+
+        .resume-banner {
+            margin-top: 14px;
+            border-radius: 12px;
+            background: var(--chip);
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #2f4d56;
+        }
+
+        @media (max-width: 820px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <section class="top">
+        <div class="top-head">
+            <div>
+                <h1>Profile Overview</h1>
+                <p class="welcome">A dedicated page for your complete saved profile, separate from the dashboard.</p>
+            </div>
+            <div class="top-actions">
+                <a class="btn" th:href="@{/dashboard}">Dashboard</a>
+                <a class="btn" th:href="@{/profile}">Edit Profile</a>
+                <a class="btn" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2 th:text="${profile.name != null ? profile.name : user.name}">User Name</h2>
+        <p class="sub" th:text="${profile.professionalTitle != null ? profile.professionalTitle : 'Professional title not added yet.'}">Professional Title</p>
+
+        <div class="resume-banner" th:text="${profile.resumeFileName != null ? 'Saved Resume: ' + profile.resumeFileName : 'No profile resume uploaded yet.'}">
+            Resume
+        </div>
+
+        <div class="grid">
+            <div class="item"><span>Email</span><strong th:text="${profile.email != null ? profile.email : user.email}">Email</strong></div>
+            <div class="item"><span>Mobile Number</span><strong th:text="${profile.mobileNumber != null ? profile.mobileNumber : 'Not provided'}">Mobile</strong></div>
+            <div class="item"><span>College Name</span><strong th:text="${profile.collegeName != null ? profile.collegeName : 'Not provided'}">College</strong></div>
+            <div class="item"><span>Degree</span><strong th:text="${profile.degree != null ? profile.degree : 'Not provided'}">Degree</strong></div>
+            <div class="item"><span>Department / Specialization</span><strong th:text="${profile.department != null ? profile.department : 'Not provided'}">Department</strong></div>
+            <div class="item"><span>CGPA</span><strong th:text="${profile.cgpa != null ? profile.cgpa : 'Not provided'}">CGPA</strong></div>
+            <div class="item"><span>LinkedIn Profile</span><strong th:text="${profile.linkedinProfile != null ? profile.linkedinProfile : 'Not provided'}">LinkedIn</strong></div>
+            <div class="item"><span>GitHub / GitLab</span><strong th:text="${profile.githubProfile != null ? profile.githubProfile : 'Not provided'}">GitHub</strong></div>
+            <div class="item" style="grid-column: 1 / -1;"><span>Portfolio Website</span><strong th:text="${profile.portfolioWebsite != null ? profile.portfolioWebsite : 'Not provided'}">Portfolio</strong></div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - Resume Analyzer Pro</title>
+    <style>
+        :root {
+            --bg: #eceff1;
+            --panel: #f7f8fa;
+            --ink: #143035;
+            --muted: #4d666d;
+            --blue: #2254d1;
+            --teal: #0b8277;
+            --green: #0a7a5f;
+            --line: #d7dde2;
+            --chip: #e8f2f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 24px));
+            margin: 14px auto 30px;
+        }
+
+        .top {
+            background: linear-gradient(115deg, #0c766f, #1f4fb7);
+            border-radius: 20px;
+            color: #f4fbff;
+            padding: 18px;
+            box-shadow: 0 10px 26px rgba(11, 64, 89, 0.2);
+        }
+
+        .top-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 38px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .welcome {
+            margin: 6px 0 0;
+            color: #dcecf6;
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            background: rgba(245, 250, 255, 0.22);
+            color: #fff;
+            padding: 9px 14px;
+            font-weight: 700;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: rgba(245, 250, 255, 0.32);
+        }
+
+        .layout {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .panel h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #204148;
+            line-height: 1.1;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .hero-card {
+            background: linear-gradient(130deg, #0d7f73, #0f655e);
+            color: #f3fffb;
+        }
+
+        .hero-card h2 {
+            color: #f3fffb;
+            font-size: 32px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .meta-item {
+            background: #fff;
+            border: 1px solid #dce4ea;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .meta-item span {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #607278;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .meta-item strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 18px;
+            color: #143035;
+        }
+
+        .chip-wrap {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .chip {
+            border-radius: 999px;
+            background: var(--chip);
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #2f4d56;
+        }
+
+        .content {
+            margin-top: 14px;
+            color: #2c4348;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .plain {
+            color: #607278;
+            font-size: 12px;
+            margin: 8px 0 0;
+        }
+
+        @media (max-width: 840px) {
+            .layout,
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <section class="top">
+        <div class="top-head">
+            <div>
+                <h1>Resume Analyzer Pro</h1>
+                <p class="welcome"
+                   th:text="'Welcome, ' + ${user.name} + '. Review the selected recommended role without leaving your current analysis flow.'">
+                </p>
+            </div>
+            <div class="top-actions">
+                <a class="btn" th:href="@{|/analysis/${analysis.id}/view|}">Back To Analysis</a>
+                <a class="btn" th:href="@{/dashboard}">Dashboard</a>
+                <a class="btn" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="layout">
+        <article class="panel hero-card">
+            <p class="plain" style="color:#d2f3ea; margin-top:0;">Recommended Role Details</p>
+            <h2 th:text="${jobDetail.jobRole}">Job Role</h2>
+            <p class="sub" style="color:#d2f3ea;">
+                This role was selected from your saved recommendations for the analysis completed on
+                <span th:text="${#temporals.format(analysis.createdAt, 'dd MMM yyyy, hh:mm a')}">Date</span>.
+            </p>
+
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span>Company</span>
+                    <strong th:text="${jobDetail.companyName}">Company Name</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Location</span>
+                    <strong th:text="${jobDetail.location}">Location</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Salary</span>
+                    <strong th:text="${jobDetail.salary}">Salary</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Employment Type</span>
+                    <strong th:text="${jobDetail.employmentType}">Employment Type</strong>
+                </div>
+            </div>
+        </article>
+
+        <article class="panel">
+            <h2>Skills Required</h2>
+            <p class="sub">These skills come directly from the new job details table.</p>
+            <div class="chip-wrap" th:if="${jobSkills != null && !#lists.isEmpty(jobSkills)}">
+                <span class="chip" th:each="skill : ${jobSkills}" th:text="${skill}">Skill</span>
+            </div>
+            <p class="plain" th:if="${jobSkills == null || #lists.isEmpty(jobSkills)}">No skills were configured for this role.</p>
+        </article>
+
+        <article class="panel" style="grid-column: 1 / -1;">
+            <h2>Role Description</h2>
+            <p class="sub">The page styling stays aligned with the existing dashboard so the new flow feels native to the application.</p>
+            <div class="content" th:text="${jobDetail.description}">
+                Description goes here.
+            </div>
+        </article>
+    </section>
+</div>
+</body>
+</html>
